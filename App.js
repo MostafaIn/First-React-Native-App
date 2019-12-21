@@ -1,25 +1,32 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [people,setPeople]=useState([
-    {id:1, name:'mostafa'},
-    {id:2, name:'rohafza'},
-    {id:3, name:'edriis'},
-    {id:4, name:'morteza'},
-    {id:5, name:'farzana'},
-    {id:6, name:'mosy'},
-    {id:7, name:'rohy'},
-    {id:8, name:'edi'},
-    {id:9, name:'mori'},
-    {id:10, name:'feri'},
+    {id:'1', name:'mostafa'},
+    {id:'2', name:'rohafza'},
+    {id:'3', name:'edriis'},
+    {id:'4', name:'morteza'},
+    {id:'5', name:'farzana'},
+    {id:'6', name:'mosy'},
+    {id:'7', name:'rohy'},
+    {id:'8', name:'edi'},
+    {id:'9', name:'mori'},
+    {id:'10', name:'feri'},
   ])
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <FlatList 
+      data={people}
+      keyExtractor={ item => item.id}
+      renderItem={({item})=>(
+        <Text style={styles.item}>{item.name}</Text>
+      )}
+      />
+      {/* <ScrollView>
       {people.map( person => <View key={person.id}><Text style={styles.item}>{person.name}</Text></View>)}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }
