@@ -1,21 +1,30 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
 export default function App() {
   const [name,setName]=useState('shaun')
-  const [person, setPerson]=useState({name:'mario', age: 40})
+  const [age, setAge]=useState(40)
 
   const handleClick = () =>{
-    setName('Mostafa')
-    setPerson({name:'Mostafa', age:35})
+    
   }
   return (
     <View style={styles.container}>
-      <Text>My name is {name}</Text>
-      <Text>this is {person.name} and he is {person.age} yearsold!</Text>
+      <Text>Enter name: </Text>
+      <TextInput 
+        style={styles.input}
+        placeholder='e.g. John Doe'
+        onChangeText={ val => setName(val)} />
+        <Text>Enter age: </Text>
+      <TextInput 
+        style={styles.input}
+        placeholder='e.g. 99'
+        keyboardType='numeric'
+        onChangeText={ val => setAge(val)} />
       <View style={styles.buttonContainer}>
-        <Button title="update name" onPress={handleClick} />
+        {/* <Button title="update name" onPress={handleClick} /> */}
       </View>
+      <Text>My name is {name}, {age} yearsold!</Text>
     </View>
   );
 }
@@ -31,4 +40,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: '#eee',
   },
+  input:{
+    borderWidth: 1,
+    borderColor:'#777',
+    padding: 8,
+    margin: 10,
+    width: 200
+  }
 });
