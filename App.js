@@ -1,38 +1,43 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList} from 'react-native';
+import Header from './components/Header';
+import TodoItem from './components/TodoItem';
+import AddTodo from './components/AddTodo';
 
 export default function App() {
-  const [people,setPeople]=useState([
-    {id:'1', name:'mostafa'},
-    {id:'2', name:'rohafza'},
-    {id:'3', name:'edriis'},
-    {id:'4', name:'morteza'},
-    {id:'5', name:'farzana'},
-    {id:'6', name:'mosy'},
-    {id:'7', name:'rohy'},
-    {id:'8', name:'edi'},
-    {id:'9', name:'mori'},
-    {id:'10', name:'feri'},
+  const [todos,setTodos]=useState([
+    {key:'1', text:'buy some coffee.'},
+    {key:'2', text:'creat react native app.'},
+    {key:'3', text:'take a shower.'}
   ])
 
-  const handlePress = id =>{
-    console.log(id)
-    setPeople( peopleList => peopleList.filter( person => person.id !== id))
+  const pressHandle = key =>{
+    setTodos(prevTodos => prevTodos.filter(todo => todo.key !== key))
   }
+
+  const handleAdd = text =>{
+    setTodos( prevTodos =>{
+      return[
+        {text: text, key: Math.random().toString()},
+        ...prevTodos
+      ]
+    })
+  }
+
   return (
     <View style={styles.container}>
-      <FlatList 
-      data={people}
-      keyExtractor={ item => item.id}
-      renderItem={({item})=>(
-        <TouchableOpacity onPress={()=>handlePress(item.id)}>
-        <Text style={styles.item}>{item.name}</Text>
-        </TouchableOpacity>
-      )}
-      />
-      {/* <ScrollView>
-      {people.map( person => <View key={person.id}><Text style={styles.item}>{person.name}</Text></View>)}
-      </ScrollView> */}
+      <Header />
+     <View style={styles.content}>
+       <AddTodo handleAdd={handleAdd} />
+       <View style={styles.list}>
+         <FlatList 
+          data={todos}
+          renderItem={({item})=>(
+          <TodoItem item={item} pressHandle={pressHandle} />
+          )}
+         />
+       </View>
+     </View>
     </View>
   );
 }
@@ -46,10 +51,13 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
   },
-  item:{
+  content:{
+    padding:40
+  },
+  list:{
     marginTop: 24,
     padding:30,
-    backgroundColor: 'lightblue',
+    backgroundColor: '#fff',
     fontSize: 24,
   }
 });
